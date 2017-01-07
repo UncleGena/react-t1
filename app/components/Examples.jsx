@@ -11,7 +11,10 @@ var React = require('react');
 
 var Examples = (props) => {
   return (
-    <h3>Examples Component asdfasdf</h3>
+    <div>
+      <h3>Examples Component asdfasdf</h3>
+      <p>some p </p>
+    </div>
   )
 }
 
