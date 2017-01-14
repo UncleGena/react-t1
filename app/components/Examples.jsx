@@ -16,8 +16,8 @@ var Examples = (props) => {
       <h1 className="text-center page-title">Examples</h1>
       <p>Here our a few example locations to try out:</p>
       <ol>
-        <li><Link to='/?locations=Kiev'>Kiev, Ukraine</Link></li>
-        <li><Link to='/?locations=Moscow'>Moscow, Russia</Link></li>
+        <li><Link to='/?location=Kiev'>Kiev, Ukraine</Link></li>
+        <li><Link to='/?location=Moscow'>Moscow, Russia</Link></li>
       </ol>
     </div>
   )

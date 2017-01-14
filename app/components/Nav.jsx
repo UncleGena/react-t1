@@ -1,28 +1,9 @@
 var React = require('react');
 var {Link, IndexLink} = require('react-router');
 
-// var Nav = React.createClass({
-//   render: function() {
-//     return (
-//       <div>
-//         <h2>Nav Compone nt</h2>
-//         <IndexLink to="/" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Get Weather</IndexLink>
-//         <Link to="/examples" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Examples</Link>
-//         <Link to="/about" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>About</Link>
-//
-//         <a href="#/about">got ot about</a>
-//       </div>
-//     )
-//   }
-// })
-
 
 
 var Nav = React.createClass({
-  onSearch: function(e) {
-    e.preventDefault();
-    console.log('%c Error', 'background-color:yellow', 'Not yet wired up');
-  },
   render: function() {
     return (
       <div className="top-bar">
@@ -44,7 +25,7 @@ var Nav = React.createClass({
           <form onSubmit={this.onSearch}>
             <ul className="menu">
               <li>
-                <input type="search" placeholder="Search weather"/>
+                <input type="search" ref="search" placeholder="Search weather"/>
               </li>
               <li>
                 <input type="submit" className="button" value="Get weather"/>
@@ -54,18 +35,21 @@ var Nav = React.createClass({
         </div>
       </div>
     )
-  }
+  },
+
+  onSearch: function(e) {
+    e.preventDefault();
+
+    var location = this.refs.search.value;
+    var encodedLocation = encodeURIComponent(location);
+
+    if (location.length > 0) {
+      this.refs.search.value = '';
+      window.location.hash = '#/?location=' + encodedLocation;
+    }
+
+    console.log(encodedLocation);
+  },
 })
 
 module.exports = Nav;
-
-// var old = {
-//   <div>
-//     <h2>Nav Compone nsss R</h2>
-//     <IndexLink to="/" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Get Weather</IndexLink>
-//     <Link to="/examples" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Examples</Link>
-//     <Link to="/about" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>About</Link>
-//
-//     <a href="#/about">got ot about</a>
-//   </div>
-// }

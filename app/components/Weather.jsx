@@ -5,35 +5,6 @@ var openWeatherMap = require('openWeatherMap');
 var ErrorModal = require('app/components/ErrorModal');
 
 var Weather = React.createClass({
-  getInitialState: function() {
-    return {
-      isLoading: false
-    }
-  },
-  handleSearch: function(location) {
-    console.log(location);
-
-    var that = this;
-
-    this.setState({
-      isLoading: true,
-      errorMessage: undefined
-    });
-
-    openWeatherMap.getTemp(location).then(function(response) {
-      that.setState({
-        location: location,
-        temp: response,
-        isLoading: false
-      })
-    }, function(error) {
-      console.log(error);
-      that.setState({
-        isLoading: false,
-        errorMessage: error.message
-      })
-    })
-  },
   render: function() {
     var {isLoading, location, temp, errorMessage} = this.state;
 
@@ -61,6 +32,59 @@ var Weather = React.createClass({
         {renderError()}
       </div>
     )
+  },
+
+  getInitialState: function() {
+    return {
+      isLoading: false
+    }
+  },
+
+  handleSearch: function(location) {
+    console.log(location);
+
+    var that = this;
+
+    this.setState({
+      isLoading: true,
+      errorMessage: undefined,
+      location: undefined,
+      temp: undefined
+    });
+
+    openWeatherMap.getTemp(location).then(function(response) {
+      that.setState({
+        location: location,
+        temp: response,
+        isLoading: false
+      })
+    }, function(error) {
+      console.log(error);
+      that.setState({
+        isLoading: false,
+        errorMessage: error.message
+      })
+    })
+  },
+
+  componentDidMount: function() {
+    var location = this.props.location.query.location;
+    console.log(location);
+
+    if (location && location.length > 0) {
+      this.handleSearch(location);
+      window.location.hash = '#/';
+    }
+  },
+
+  componentWillReceiveProps: function(newProps) {
+    var location = newProps.location.query.location;
+    console.log(location);
+
+    if (location && location.length > 0) {
+      this.handleSearch(location);
+      window.location.hash = '#/';
+    }
   }
 })
 
